@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School Management Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: auto;
+      overflow: hidden;
+    }
+    header {
+      background: #333;
+      color: white;
+      padding: 10px 0;
+      text-align: center;
+    }
+    h2 {
+      color: #333;
+      text-align: center;
+      padding: 20px;
+      background-color: #e9e9e9;
+      border-radius: 5px;
+    }
+    .form-container {
+      background-color: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    table {
+      width: 100%;
+      margin: 10px 0;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .oauth-button {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0;
+    }
+    .oauth-button button {
+      margin-right: 10px;
+    }
+    .google-button {
+      background-color: #4285F4; /* Google color */
+    }
+    .facebook-button {
+      background-color: #3b5998; /* Facebook color */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>School Management System</h1>
+  </header>
+
+  <div class="container">
+    <!-- Registration Form -->
+    <div class="form-container">
+      <h3>Create Account</h3>
+      <form id="registration-form">
+        <label for="role">Select Role:</label>
+        <select id="role" name="role" required aria-label="Role">
+          <option value="">Select Role</option>
+          <option value="admin">Admin</option>
+          <option value="teacher">Teacher</option>
+        </select>
+
+        <div id="oauth-container" style="display: none;">
+          <p>Sign up using:</p>
+          <div class="oauth-button">
+            <button type="button" class="google-button" onclick="window.location.href='/auth/google'">Sign up with Google</button>
+            <button type="button" class="facebook-button" onclick="window.location.href='/auth/facebook'">Sign up with Facebook</button>
+          </div>
+        </div>
+        
+        <button type="button" id="proceed-button">Proceed</button>
+      </form>
+    </div>
+
+    <!-- Login Form -->
+    <div class="form-container login-container">
+      <h3>Login</h3>
+      <form action="/login" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required aria-label="Username">
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required aria-label="Password">
+
+        <button type="submit">Login</button>
+      </form>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <h2>Admin Dashboard</h2>
+
+    <!-- Admin: Add New Student -->
+    <div class="form-container">
+      <h3>Add New Student</h3>
+      <form action="/add_student" method="POST">
+        <label for="student-id">Student ID:</label>
+        <input type="text" id="student-id" name="student-id" required aria-label="Student ID">
+
+        <label for="student-username">Create Username:</label>
+        <input type="text" id="student-username" name="student-username" required aria-label="Create Username">
+
+        <label for="full-name">Full Name:</label>
+        <input type="text" id="full-name" name="full-name" required aria-label="Full Name">
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required aria-label="Date of Birth">
+
+        <label for="grade">Grade Level (Optional):</label>
+        <select id="grade" name="grade" aria-label="Grade Level">
+          <option value="">Select Grade</option>
+          <option value="Grade 1">Grade 1</option>
+          <option value="Grade 2">Grade 2</option>
+          <option value="Grade 3">Grade 3</option>
+          <option value="Grade 4">Grade 4</option>
+          <option value="Grade 5">Grade 5</option>
+          <option value="Grade 6">Grade 6</option>
+          <option value="Grade 7">Grade 7</option>
+          <option value="Grade 8">Grade 8</option>
+          <option value="Grade 9">Grade 9</option>
+          <option value="Grade 10">Grade 10</option>
+          <option value="Grade 11">Grade 11</option>
+          <option value="Grade 12">Grade 12</option>
+        </select>
+
+        <label for="contact">Contact Number:</label>
+        <input type="tel" id="contact" name="contact" required aria-label="Contact Number" placeholder="Enter your contact number">
+
+        <label for="guardian">Guardian's Name:</label>
+        <select id="guardian" name="guardian" required aria-label="Guardian's Name">
+          <option value="">Select Guardian</option>
+          <option value="Father">Father</option>
+          <option value="Mother">Mother</option>
+          <option value="Brother">Brother</option>
+          <option value="Sister">Sister</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label for="subject">Subject:</label>
+        <select id="subject" name="subject" required aria-label="Subject">
+          <option value="">Select Subject</option>
+          <option value="Mathematics">Mathematics</option>
+          <option value="Science">Science</option>
+          <option value="English Language Arts">English Language Arts</option>
+          <option value="Social Studies">Social Studies</option>
+          <option value="Physical Education">Physical Education</option>
+          <option value="Arts">Arts (Visual Arts and Music)</option>
+          <option value="Computer Science">Computer Science</option>
+        </select>
+
+        <button type="submit">Add Student</button>
+      </form>
+    </div>
+
+    <!-- Admin: Update Ranking -->
+    <div class="form-container">
+      <h3>Update Student Ranking</h3>
+      <form action="/update_ranking" method="POST">
+        <label for="student-id-ranking">Student ID:</label>
+        <input type="text" id="student-id-ranking" name="student-id" required aria-label="Student ID for Ranking">
+
+        <label for="class-rank">Class Rank:</label>
+        <input type="number" id="class-rank" name="class-rank" required aria-label="Class Rank">
+
+        <label for="grade-rank">Grade Rank:</label>
+        <input type="number" id="grade-rank" name="grade-rank" required aria-label="Grade Rank">
+
+        <label for="school-rank">School Rank:</label>
+        <input type="number" id="school-rank" name="school-rank" required aria-label="School Rank">
+
+        <button type="submit">Update Ranking</button>
+      </form>
+    </div>
+
+    <!-- Teacher Dashboard -->
+    <h2>Teacher Dashboard</h2>
+
+    <!-- Teacher: Enter Marks for Student -->
+    <div class="form-container">
+      <h3>Enter Marks for Student</h3>
+      <form action="/submit_marks" method="POST">
+        <label for="student-id-marks">Student ID:</label>
+        <input type="text" id="student-id-marks" name="student-id" required aria-label="Student ID for Marks">
+
+        <label for="subject-marks">Subject:</label>
+        <select id="subject-marks" name="subject" required aria-label="Subject">
+          <option value="">Select Subject</option>
+          <option value="Mathematics">Mathematics</option>
+          <option value="Science">Science</option>
+          <option value="English Language Arts">English Language Arts</option>
+          <option value="Social Studies">Social Studies</option>
+          <option value="Physical Education">Physical Education</option>
+          <option value="Arts">Arts (Visual Arts and Music)</option>
+          <option value="Computer Science">Computer Science</option>
+        </select>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Assessment Type</th>
+              <th>Marks Obtained</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mid Exam</td>
+              <td><input type="number" name="mid-exam" required aria-label="Mid Exam Marks"></td>
+            </tr>
+            <tr>
+              <td>Assignment</td>
+              <td><input type="number" name="assignment" required aria-label="Assignment Marks"></td>
+            </tr>
+            <tr>
+              <td>Final Exam</td>
+              <td><input type="number" name="final-exam" required aria-label="Final Exam Marks"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <label for="remarks">Teacher's Remarks:</label>
+        <textarea id="remarks" name="remarks" aria-label="Teacher's Remarks"></textarea>
+
+        <button type="submit">Submit Marks</button>
+      </form>
+    </div>
+
+    <!-- Teacher: Update Academic Record -->
+    <div class="form-container">
+      <h3>Update Academic Record</h3>
+      <form action="/update_record" method="POST">
+        <label for="student-id-record">Student ID:</label>
+        <input type="text" id="student-id-record" name="student-id" required aria-label="Student ID for Record">
+
+        <label for="year">Academic Year:</label>
+        <input type="text" id="year" name="year" required aria-label="Academic Year">
+
+        <label for="term">Term:</label>
+        <input type="text" id="term" name="term" required aria-label="Term">
+
+        <button type="submit">Update Record</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('proceed-button').onclick = function() {
+      const role = document.getElementById('role').value;
+      if (role) {
+        document.getElementById('oauth-container').style.display = 'block';
+      } else {
+        alert('Please select a role before proceeding.');
+      }
+    };
+  </script>
+</body>
+</html>
